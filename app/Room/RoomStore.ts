@@ -7,6 +7,6 @@ interface RoomStore {
 }
 
 export const useRoom = create<RoomStore>((set) => ({
-  room: new Room(),
+  room: new Room(10, 5, 10),
   setDimensions: (w, h, d) => set({ room: new Room(w, h, d) }),
 }));
