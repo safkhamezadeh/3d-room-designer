@@ -19,7 +19,7 @@ function Controls() {
     d: false,
   });
 
-  const position = useRef(new THREE.Vector3(0, 1.7, 5));
+  const position = useRef(new THREE.Vector3(0, 1.7, 4));
 
   const SPEED = 0.08;
   const EYE_HEIGHT = 1.7;
@@ -94,7 +94,7 @@ function Controls() {
 
 export default function App() {
   return (
-    <Canvas camera={{ position: [0, 1.7, 5], fov: 75 }}>
+    <Canvas camera={{ position: [0, 1.7, 4], fov: 75 }}>
       <PointerLockControls />
       <Controls />
 
