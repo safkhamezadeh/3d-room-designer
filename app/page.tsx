@@ -11,7 +11,6 @@ type Key = "w" | "a" | "s" | "d";
 function Controls() {
   const { camera, gl } = useThree();
 
-  // ✅ fully typed key map
   const keys = useRef<Record<Key, boolean>>({
     w: false,
     a: false,
@@ -47,20 +46,6 @@ function Controls() {
       window.removeEventListener("keyup", up);
     };
   }, []);
-
-  useEffect(() => {
-    const canvas = gl.domElement;
-
-    const handleClick = () => {
-      canvas.requestPointerLock();
-    };
-
-    canvas.addEventListener("click", handleClick);
-
-    return () => {
-      canvas.removeEventListener("click", handleClick);
-    };
-  }, [gl]);
 
   useFrame(() => {
     const forward = new THREE.Vector3();
