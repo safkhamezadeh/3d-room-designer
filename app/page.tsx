@@ -7,9 +7,8 @@ import Room from "./Room/RoomUI";
 import { useState } from "react";
 import { useThree } from "@react-three/fiber";
 import { useEffect } from "react";
+import { CameraMode } from "./types/camera";
 import * as THREE from "three";
-
-type CameraMode = "topDown" | "firstPerson";
 
 export default function App() {
   const [cameraMode, setCameraMode] = useState<CameraMode>("topDown");
@@ -51,7 +50,7 @@ export default function App() {
           />
         )}
 
-        <Room />
+        <Room cameraMode={cameraMode} />
         <ambientLight intensity={0.3} />
       </Canvas>
     </>
