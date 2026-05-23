@@ -1,52 +1,45 @@
 import { useRoom } from "./RoomStore";
 import WallUI from "./WallUI";
-import { CameraMode } from "../types/camera";
 
-type RoomUIProps = {
-  cameraMode: CameraMode;
-};
-
-export default function RoomUI({ cameraMode }: RoomUIProps) {
-  const { room } = useRoom();
+export default function RoomUI() {
+  const { room, cameraMode } = useRoom();
   const { width, height, depth } = room;
 
   return (
     <group>
-      {/* floor */}
       <WallUI
+        name="floor"
         wall={room.floor}
         position={[0, 0, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
       />
-
-      {/* ceiling */}
       {cameraMode === "firstPerson" && (
         <WallUI
+          name="ceiling"
           wall={room.ceiling}
           position={[0, height, 0]}
           rotation={[Math.PI / 2, 0, 0]}
         />
       )}
-
-      {/* back wall */}
-      <WallUI wall={room.back} position={[0, height / 2, -depth / 2]} />
-
-      {/* front wall */}
       <WallUI
+        name="back"
+        wall={room.back}
+        position={[0, height / 2, -depth / 2]}
+      />
+      <WallUI
+        name="front"
         wall={room.front}
         position={[0, height / 2, depth / 2]}
         rotation={[0, Math.PI, 0]}
       />
-
-      {/* left wall */}
       <WallUI
+        name="left"
         wall={room.left}
         position={[-width / 2, height / 2, 0]}
         rotation={[0, Math.PI / 2, 0]}
       />
-
-      {/* right wall */}
       <WallUI
+        name="right"
         wall={room.right}
         position={[width / 2, height / 2, 0]}
         rotation={[0, -Math.PI / 2, 0]}

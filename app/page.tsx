@@ -1,76 +1,66 @@
 "use client";
-
 import { Canvas } from "@react-three/fiber";
 import { PointerLockControls, OrbitControls } from "@react-three/drei";
 import { FirstPersonControls } from "./Controls/FirstPerson";
 import Room from "./Room/RoomUI";
-import { useState } from "react";
 import { useThree } from "@react-three/fiber";
 import { useEffect } from "react";
-import { CameraMode } from "./types/camera";
+import { useRoom } from "./Room/RoomStore";
 import * as THREE from "three";
 
 export default function App() {
-  const [cameraMode, setCameraMode] = useState<CameraMode>("topDown");
+  const { cameraMode, setCameraMode, isDragging } = useRoom();
 
   return (
     <>
-      {/* UI toggle */}
       <button
         onClick={() =>
-          setCameraMode((m) =>
-            m === "firstPerson" ? "topDown" : "firstPerson",
+          setCameraMode(
+            cameraMode === "firstPerson" ? "topDown" : "firstPerson",
           )
         }
-        style={{
-          position: "absolute",
-          top: 10,
-          left: 10,
-          zIndex: 10,
-        }}
+        style={{ position: "absolute", top: 10, left: 10, zIndex: 10 }}
       >
         Switch to {cameraMode === "firstPerson" ? "Top Down" : "First Person"}
       </button>
 
       <Canvas camera={{ position: [15, 20, 15], fov: 60 }}>
-        <CameraReset mode={cameraMode} />
-
+        <CameraReset />
         {cameraMode === "firstPerson" && (
           <>
             <PointerLockControls />
             <FirstPersonControls />
           </>
         )}
-
         {cameraMode === "topDown" && (
           <OrbitControls
             target={[0, 0, 0]}
-            enableRotate={true}
-            enablePan={true}
+            enableRotate={!isDragging}
+            enablePan={!isDragging}
+            enableZoom={!isDragging}
           />
         )}
-
-        <Room cameraMode={cameraMode} />
+        <Room />
         <ambientLight intensity={0.3} />
       </Canvas>
     </>
   );
 }
 
-function CameraReset({ mode }: { mode: CameraMode }) {
+function CameraReset() {
   const { camera } = useThree();
+  const { cameraMode } = useRoom();
 
   useEffect(() => {
-    if (mode === "topDown") {
+    if (cameraMode === "topDown") {
       camera.position.set(15, 20, 15);
       camera.lookAt(0, 0, 0);
     }
-
-    if (mode === "firstPerson") {
+    if (cameraMode === "firstPerson") {
       camera.position.set(0, 1.7, 3);
       camera.rotation.set(0, 0, 0);
     }
-  }, [mode, camera]);
+  }, [cameraMode, camera]);
 
   return null;
 }

@@ -15,4 +15,10 @@ export class Wall {
     this.depth = depth;
     this.color = color;
   }
+
+  resize(width: number, height: number, depth: number) {
+    this.width = width;
+    this.height = height;
+    this.depth = depth;
+  }
 }

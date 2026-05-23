@@ -22,4 +22,16 @@ export class Room {
     this.floor = new Wall(width, depth, 0.1, "#8D1FC0");
     this.ceiling = new Wall(width, depth, 0.1, "#D93F51");
   }
+
+  resize(width: number, height: number, depth: number) {
+    this.width = width;
+    this.height = height;
+    this.depth = depth;
+    this.front.resize(width, height, 0.1);
+    this.back.resize(width, height, 0.1);
+    this.left.resize(depth, height, 0.1);
+    this.right.resize(depth, height, 0.1);
+    this.floor.resize(width, depth, 0.1);
+    this.ceiling.resize(width, depth, 0.1);
+  }
 }
