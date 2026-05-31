@@ -5,7 +5,7 @@ import * as THREE from "three";
 type Key = "w" | "a" | "s" | "d";
 
 export function FirstPersonControls() {
-  const { camera, gl } = useThree();
+  const { camera } = useThree();
 
   const keys = useRef<Record<Key, boolean>>({
     w: false,
